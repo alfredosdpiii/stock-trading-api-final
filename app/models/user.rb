@@ -35,7 +35,7 @@ class User < ApplicationRecord
       )
 
       stock_portfolio.transact_shares = shares
-      render json: stock_portfio.uniq
+      stock_portfolio
     else
       stock.save
       stock.transact_shares = shares

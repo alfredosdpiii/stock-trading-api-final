@@ -35,9 +35,9 @@ class StocksController < ApplicationController
   def require_approved
     return if current_user.admin?
 
-    unless current_user.approved?
-      flash[:alert] = 'You are not yet approved by the admin.'
-      redirect_to stocks_path
-    end
+    return if current_user.approved?
+
+    flash[:alert] = 'You are not yet approved by the admin.'
+    redirect_to stocks_path
   end
 end
