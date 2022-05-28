@@ -9,12 +9,21 @@ Rails.application.routes.draw do
                        sessions: 'users/sessions',
                        registrations: 'users/registrations'
                      }
+  namespace :admin do
+    get '/', to: 'users#index'
+    resources :users
+    resources :pending_traders
+    resources :transactions
+  end
+
+  resources :stocks
   resources :quotes, except: [:show]
   get 'quotes/:symbol', to: 'quotes#show'
-  get 'sell_stocks/:symbol', to: 'sell_stocks#show', as: 'get_sellstock'
-  post 'sell_stocks/:symbol', to: 'sell_stocks#create', as: 'sell_stock'
+  resources :sell_stocks
+  # get 'sell_stocks/:symbol', to: 'sell_stocks#show', as: 'get_sellstock'
+  # post 'sell_stocks/:symbol', to: 'sell_stocks#create', as: 'sell_stock'
   get 'portfolio', to: 'stocks#index'
-  resources :stocks
+  # post 'buy/:params', to: 'stocks#create'
 
   resources :transactions, only: [:index]
 end

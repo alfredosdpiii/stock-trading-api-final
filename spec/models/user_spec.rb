@@ -44,16 +44,21 @@ RSpec.describe User, type: :model do
     end
   end
 
-  # context 'User trading' do
-  #   it 'can buy stocks' do
-  #     user = User.create!(
-  #       email: 'asdp@test.com',
-  #       password: 'abc123',
-  #       approved: true
-  #     )
-  #
-  #     stock = user.buy_stock('AAPL', 10)
-  #     expect(stock.shares).to eq(10)
-  #   end
-  # end
+  context 'User trading' do
+    it 'can buy stocks' do
+      user = User.create!(
+        email: 'asdp@test.com',
+        password: 'abc123',
+        approved: true
+      )
+
+      stock_params = {}
+      stock_params[:symbol] = 'TSLA'
+      stock_params[:company_name] = 'Tesla Inc'
+      stock_params[:shares] = 10
+      stock = user.buy_stock(stock_params, shares: 10)
+      # debugger
+      expect(stock.shares).to eq(10)
+    end
+  end
 end

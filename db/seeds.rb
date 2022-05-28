@@ -5,3 +5,35 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+TransactionType.create!(id: 0, name: 'buy')
+TransactionType.create!(id: 1, name: 'sell')
+
+User.create!([{
+               email: 'admin@admin.com',
+               password: 'password',
+               role: 'admin',
+               approved: true
+             },
+              {
+                email: 'alfredo.sdpiii@gmail.com',
+                password: 'asdasdasd',
+                role: 'trader',
+                approved: true
+              },
+              {
+                email: 'jakethegreat@gmail.com',
+                password: 'asdasdasd',
+                role: 'trader',
+                approved: false
+              },
+              {
+                email: 'justinlonceras@gmail.com',
+                password: 'asdasdasd',
+                role: 'trader',
+                approved: false
+              }])
+users = User.all
+users.each do |user|
+  user.confirm
+end
