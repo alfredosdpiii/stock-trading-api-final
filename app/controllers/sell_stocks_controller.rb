@@ -23,7 +23,9 @@ class SellStocksController < ApplicationController
       render(json: { 'message': 'Successfully sold shares!', 'status': 200 },
              status: 200)
     else
-      redirect_to get_sellstock_path(params[:symbol])
+      # redirect_to get_sellstock_path(params[:symbol])
+      render(json: { 'message': 'You cannot sell more than what you have', 'status': 406 },
+             status: 406)
     end
   end
 

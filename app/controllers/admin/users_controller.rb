@@ -19,10 +19,12 @@ class Admin::UsersController < ApplicationController
     @user.confirmed_at = Time.now
 
     if @user.save
-      redirect_to new_admin_user_path, notice: 'Account success!'
+      render(json: { 'message': 'Account saved', 'status': 200 },
+             status: 200)
+
     else
-      flash[:alert] = @user.errors.full_messages
-      render :new
+      error = @user.errors.full_messages
+      render json: error
     end
   end
 
@@ -30,26 +32,27 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(allowed_params)
-      redirect_to admin_user_path(@user), notice: 'User successfully updated.'
+      render json: @user
+
     else
-      render :edit
+      error = @user.errors.full_messages
+      render json: error
     end
   end
 
   def destroy
     @user.destroy
-    redirect_to admin_users_path, alert: 'User deleted.'
+    render json: @user.destroy
   end
 
   private
 
   def allowed_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :approved)
+    params.require(:user).permit(:email, :password, :approved)
   end
 
   def require_admin
     redirect_to root_path unless current_user.admin?
-
   end
 
   def set_user

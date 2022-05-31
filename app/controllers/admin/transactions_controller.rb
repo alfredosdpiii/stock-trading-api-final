@@ -4,5 +4,6 @@ class Admin::TransactionsController < ApplicationController
                     .includes(:transaction_type, :user)
                     .all
                     .order(created_at: :DESC)
+    render json: @transactions
   end
 end

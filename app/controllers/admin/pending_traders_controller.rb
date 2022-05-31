@@ -10,8 +10,8 @@ class Admin::PendingTradersController < ApplicationController
     if @user.update(approved: true)
       render(json: { 'message': 'Successfully approved user!', 'status': 200 },
              status: 200)
-      UserMailer.with(user: @user).welcome_email.deliver_now
-      redirect_to admin_pending_traders_path, notice: 'User approved.'
+      # UserMailer.with(user: @user).welcome_email.deliver_now
+      # redirect_to admin_pending_traders_path, notice: 'User approved.'
     else
       render :index
     end

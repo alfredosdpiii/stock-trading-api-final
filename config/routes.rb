@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     resources :users
     resources :pending_traders
     resources :transactions
+    post '/create', to: 'users_controller#create'
+
+    patch '/traders/approve/', to: 'pending_traders#update'
   end
 
   resources :stocks

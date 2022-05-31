@@ -26,6 +26,8 @@ class User < ApplicationRecord
   def buy_stock(stock_params, shares)
     # render(json: { error: shares.value, class: shares.class })
     price = stock_params[:cost_price].to_f
+    # shares = shares[:shares].to_i
+    # debugger
     if check_balance(price, shares)
       symbol = stock_params[:symbol].to_s
       stock = stocks.build(stock_params)
@@ -50,13 +52,14 @@ class User < ApplicationRecord
 
   def sell_stock(symbol, shares)
     stock = stocks.find_by_symbol symbol
-    sold_shares = shares
+    sold_shares = shares.to_i
 
+    # debugger
     if sold_shares > stock.shares
-      # flash[:alert] =
-      #   "You only have #{stock.shares} of #{stock.company_name} to sell."
-      render(json: { 'message': 'you cannot sell more than what you have' }, status: 403)
       nil
+      # message = 'you cannot sell more than what you have'
+      # return message
+      # render(json: { 'message': 'you cannot sell more than what you have' }, status: 403)
     else
       stock.update shares: (stock.shares - sold_shares)
       stock.transact_shares = sold_shares
@@ -65,17 +68,20 @@ class User < ApplicationRecord
   end
 
   def update_balance(shares, price, type)
+    # shares = shares[:shares].to_i
     total = shares * price
     new_balance = if type == 'buy'
                     cash - total
                   else
                     cash + total
                   end
-    self.update!(cash: new_balance)
+    update!(cash: new_balance)
   end
 
   def check_balance(price, shares)
+    # shares = :shares
+    shares.to_i
     total = price * shares
-    return true if self.cash > total
+    return true if cash > total
   end
 end

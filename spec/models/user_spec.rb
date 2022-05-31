@@ -56,7 +56,7 @@ RSpec.describe User, type: :model do
       stock_params[:symbol] = 'TSLA'
       stock_params[:company_name] = 'Tesla Inc'
       stock_params[:shares] = 10
-      stock = user.buy_stock(stock_params, shares: 10)
+      stock = user.buy_stock(stock_params, 10)
       # debugger
       expect(stock.shares).to eq(10)
     end
